@@ -28,12 +28,12 @@ namespace RediCom
         Task<object> GetAsync(DB db, string key);
         Task<bool> DeleteAsync(DB db, string key);
         Task<bool> ClearAsync(DB db);
-        Task<T> GetItemAsync<T>(DB db, string key, T Default = default);
+        Task<T> GetItemAsync<T>(DB db, string key, T Default = default, Func<string, Task<T>> CacheMissCallback = null);
 
         bool Save(DB db, string key, object value, TimeSpan? expiry = null);
         object Get(DB db, string key);
         bool Delete(DB db, string key);
         bool Clear(DB db);
-        T GetItem<T>(DB db, string key, T Default = default);
+        T GetItem<T>(DB db, string key, T Default = default, Func<string, T> CacheMissCallback = null);
     }
 }

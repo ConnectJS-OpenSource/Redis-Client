@@ -173,12 +173,15 @@ namespace RediCom.Redis
             }
         }
 
-        public T GetItem<T>(DB db, string key, T Default = default)
+        public T GetItem<T>(DB db, string key, T Default = default, Func<string, T> CacheMissCallback = null)
         {
             try
             {
                 if (!Enabled) throw new Exception("Redis Service not enabled");
-                return Task.Run<T>(async () => await (this.Client.GetDb((int)db).GetAsync<T>(key) ?? Task.FromResult(Default))).Result;
+                var result = Task.Run<T>(async () => await (this.Client.GetDb((int)db).GetAsync<T>(key) ?? Task.FromResult(Default))).Result;
+                if (result == null && CacheMissCallback != null)
+                    return CacheMissCallback(key);
+                return result;
             }
             catch (Exception ex)
             {
@@ -187,12 +190,15 @@ namespace RediCom.Redis
             }
         }
 
-        public async Task<T> GetItemAsync<T>(DB db, string key, T Default = default)
+        public async Task<T> GetItemAsync<T>(DB db, string key, T Default = default, Func<string, Task<T>> CacheMissCallback = null)
         {
             try
             {
                 if (!Enabled) throw new Exception("Redis Service not enabled");
-                return await (this.Client.GetDb((int)db).GetAsync<T>(key) ?? Task.FromResult(Default));
+                var result = await (this.Client.GetDb((int)db).GetAsync<T>(key) ?? Task.FromResult(Default));
+                if (result == null && CacheMissCallback != null)
+                    return await CacheMissCallback(key);
+                return result;
             }
             catch (Exception ex)
             {
