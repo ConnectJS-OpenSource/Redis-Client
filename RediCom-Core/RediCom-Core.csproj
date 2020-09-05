@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>RediCom_Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StackExchange.Redis" Version="2.1.58" />
+    <PackageReference Include="StackExchange.Redis.Extensions.AspNetCore" Version="6.3.5" />
+    <PackageReference Include="StackExchange.Redis.Extensions.Newtonsoft" Version="6.3.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Redis-Config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

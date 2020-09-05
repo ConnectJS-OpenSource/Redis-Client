@@ -14,6 +14,8 @@ namespace RediCom.Redis
         RedisSettings Settings { get; set; }
         RedisCacheClient Client { get; set; }
 
+        const string TICKET_PDF_QUEUE = "ticket-pdfs";
+
         Node RedisNode { get; set; }
         IRedisCacheConnectionPoolManager connection;
         RedisConfiguration redisConfiguration;
