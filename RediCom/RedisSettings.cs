@@ -34,7 +34,8 @@ namespace RediCom.Redis
     internal enum ConnectionMode
     {
         Prod,
-        Dev
+        Dev,
+        Localhost
     }
 
     internal class Server
@@ -45,9 +46,14 @@ namespace RediCom.Redis
 
         public Node Dev { get; set; }
         public Node Prod { get; set; }
+        public Node Localhost { get; set; }
         public int Timeout { get; set; }
         public bool Enabled { get; set; }
-        [JsonIgnore] public Node Redis => this.Mode == ConnectionMode.Prod ? this.Prod : this.Dev;
+        [JsonIgnore]
+        public Node Redis => this.Mode == ConnectionMode.Prod ?
+            this.Prod : this.Mode == ConnectionMode.Dev ?
+            this.Dev : this.Mode == ConnectionMode.Localhost ?
+            this.Localhost : this.Localhost;
     }
 
     internal class Node

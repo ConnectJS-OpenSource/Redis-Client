@@ -9,14 +9,6 @@
         {
           "host": "server1.com",
           "port": 6379
-        },
-        {
-          "host": "server2.com",
-          "port": 6379
-        },
-        {
-          "host": "server3.com",
-          "port": 6379
         }
       ]
     },
@@ -25,14 +17,6 @@
       "clusters": [
         {
           "host": "server1.com",
-          "port": 6379
-        },
-        {
-          "host": "server2.com",
-          "port": 6379
-        },
-        {
-          "host": "server3.com",
           "port": 6379
         }
       ]

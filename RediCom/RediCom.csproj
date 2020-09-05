@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="SSH.NET" Version="2016.1.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
-    <PackageReference Include="StackExchange.Redis.Extensions.Core" Version="5.5.0" />
     <PackageReference Include="StackExchange.Redis.Extensions.Newtonsoft" Version="5.5.0" />
   </ItemGroup>
 

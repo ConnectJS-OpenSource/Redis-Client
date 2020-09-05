@@ -10,9 +10,11 @@ namespace Client
         {
 
             IRedisCache cache = new RedisCache();
-            cache.Save(DB.DB01, "test-key", "this is a data");
 
-            var data = cache.Get(DB.DB01, "test-key");
+
+            cache.Save(DB.DB01, "test-key", "this is a data", new System.TimeSpan(0,5,0));
+
+            var data = cache.Get(DB.DB02, "test-key");
         }
     }
 }

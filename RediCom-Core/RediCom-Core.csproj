@@ -3,11 +3,20 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>RediCom_Core</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>RediCom</PackageId>
+    <Authors>Sunil Kumar</Authors>
+    <Company>ConnectJs</Company>
+    <Product>RediCom</Product>
+    <PackageProjectUrl>https://github.com/ConnectJS-OpenSource/Redis-Client</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ConnectJS-OpenSource/Redis-Client</RepositoryUrl>
+    <Description>A simple Redis-Client wrapper for netCore projects</Description>
+    <Version>1.0.3</Version>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="StackExchange.Redis" Version="2.1.58" />
-    <PackageReference Include="StackExchange.Redis.Extensions.AspNetCore" Version="6.3.5" />
     <PackageReference Include="StackExchange.Redis.Extensions.Newtonsoft" Version="6.3.5" />
   </ItemGroup>
 
