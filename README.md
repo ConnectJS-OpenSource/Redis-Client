@@ -1,5 +1,5 @@
 # Redis-Client
-create local redis settings json file
+create local redis settings json file as Redis-Config.json
 
 ```json
 {
