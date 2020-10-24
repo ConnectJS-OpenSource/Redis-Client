@@ -25,11 +25,13 @@ namespace RediCom.Redis
         {
             if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "redis-conf.json")))
                 this.Settings = RedisSettings.ProcessSettingsFile(File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "redis-conf.json")));
+            InitRedis();
         }
 
         public RedisCache(RedisSettings settings)
         {
             this.Settings = settings;
+            InitRedis();
         }
 
         private void InitRedis()
