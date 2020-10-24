@@ -1,46 +1,16 @@
 # Redis-Client
-create local redis settings json file as Redis-Config.json
+create local redis settings json file as redis-conf.json
 
 ```json
-{
-  "server": {
-    "enabled" :  true,
-    "mode": "dev",
-    "timeout": 65000,
-    "prod": {
-      "password": "P@ssw0rd",
-      "clusters": [
-        {
-          "host": "server1.com",
-          "port": 6379
-        },
-        {
-          "host": "server2.com",
-          "port": 6379
-        },
-        {
-          "host": "server3.com",
-          "port": 6379
-        }
-      ]
-    },
-    "dev": {
-      "password": "P@ssw0rd",
-      "clusters": [
-        {
-          "host": "server1.com",
-          "port": 6379
-        },
-        {
-          "host": "server2.com",
-          "port": 6379
-        },
-        {
-          "host": "server3.com",
-          "port": 6379
-        }
-      ]
-    }
+  {
+    "host": "localhost",
+    "port": 6379,
+    "password": "P@ssw0rd",
+    "clusters": [{
+      "host":"",
+      "port":""
+    }]
   }
-}
 ```
+
+Or Directly create the "RedisSettings" instance and pass in the constructor for RedisCache class
