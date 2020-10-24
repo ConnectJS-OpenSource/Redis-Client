@@ -16,31 +16,36 @@ namespace RediCom.Redis
 
         const string TICKET_PDF_QUEUE = "ticket-pdfs";
 
-        Node RedisNode { get; set; }
         IRedisCacheConnectionPoolManager connection;
         RedisConfiguration redisConfiguration;
-        bool Enabled;
+        bool Enabled = true;
 
 
         public RedisCache()
         {
-            this.Settings = new RedisSettings(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Redis-Config.json"));
-            this.RedisNode = this.Settings.Server.Redis;
-            this.Enabled = this.Settings.Server.Enabled;
-            if (Enabled) this.InitRedis();
+            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "redis-conf.json")))
+                this.Settings = RedisSettings.ProcessSettingsFile(File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "redis-conf.json")));
+        }
+
+        public RedisCache(RedisSettings settings)
+        {
+            this.Settings = settings;
         }
 
         private void InitRedis()
         {
 
-            redisConfiguration = new RedisConfiguration()
+            var redisConfiguration = new RedisConfiguration()
             {
                 AbortOnConnectFail = false,
+                Hosts = new RedisHost[]
+                {
+                    new RedisHost(){Host = this.Settings.Host, Port = this.Settings.Port},
+                },
                 AllowAdmin = true,
-                ConnectTimeout = this.Settings.Server.Timeout,
                 Database = 0,
                 Ssl = false,
-                Password = this.RedisNode.Password,
+                Password = this.Settings.Password,
                 ServerEnumerationStrategy = new ServerEnumerationStrategy()
                 {
                     Mode = ServerEnumerationStrategy.ModeOptions.All,
@@ -49,13 +54,15 @@ namespace RediCom.Redis
                 },
             };
 
-            var clusters = this.RedisNode.Clusters.ToList();
-            redisConfiguration.Hosts = clusters
-                .Select(m => new RedisHost { Host = m.Host, Port = m.Port })
-                .ToArray();
+            this.Settings.Clusters?.ForEach(host =>
+            {
+                if (host.Host != null && host.Port > 0)
+                    redisConfiguration.Hosts.ToList().Add(new RedisHost { Host = host.Host, Port = host.Port });
+            });
 
             connection = new RedisCacheConnectionPoolManager(redisConfiguration);
             this.Client = new Lazy<RedisCacheClient>(() => new RedisCacheClient(connection, new NewtonsoftSerializer(), redisConfiguration), true).Value;
+
 
         }
 
